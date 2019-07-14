@@ -43,7 +43,7 @@ def dp_make_weight(egg_weights, target_weight, memo = {}):
 
 # EXAMPLE TESTING CODE, feel free to add more if you'd like
 if __name__ == '__main__':
-    egg_weights = (1, 5, 10, 20)
+    egg_weights = (1, 5, 10, 25)
     n = 99
     print(f"Egg weights = {egg_weights}")
     print(f"n = {n}")
