@@ -47,14 +47,14 @@ def load_map(map_filename):
     with open(map_filename) as f:
         for line in f:
             src, dest, total_dist, outdoor_dist = line.split()
-            if not g.has_node(src): 
-                g.add_node(src)
-            if not g.has_node(dest):
-                g.add_node(dest)
-            g.add_edge(WeightedEdge(src, dest, total_dist, outdoor_dist))
+            nsrc = Node(src)
+            ndest = Node(dest)
+            if not g.has_node(nsrc): 
+                g.add_node(nsrc)
+            if not g.has_node(ndest):
+                g.add_node(ndest)
+            g.add_edge(WeightedEdge(nsrc, ndest, int(total_dist), int(outdoor_dist)))
     return g
-
-
 
 # Problem 2c: Testing load_map
 # Include the lines used to test load_map below, but comment them out: 
@@ -109,35 +109,8 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
 
     Recursive helper function
     """
-    g = digraph
-    if not (g.has_node(start) and g.has_node(end)):
-        raise ValueError("Invalid input nodes.")
-    elif start == end:
-        # base case
-        return path
-    else:
-        # recursive call
-        for edge in g.get_edges_for_node(start):
-            child = edge.get_dest()
-            if child not in path[0]: # avoid loops
-                new_total_dist_travelled = path[1] + edge.get_total_distance()
-                new_outside_dist_travelled = path[2] + edge.get_outside_distance()
-                if new_outside_dist_travelled > max_dist_outdoors:
-                    best_path = None
-                elif new_total_dist_travelled > best_dist:
-                    best_dist = None
-                else: 
-                    new_path = get_best_path(g, child, end, path, max_dist_outdoors, best_dist, best_path)
-                    if new_path != None:
-                        path[0] += new_path
-                        if new_total_dist_travelled < best_dist: 
-                            best_path = path[0]
-                            best_dist = new_total_dist_travelled
-        return best_path # where should i put this return (inside for-loop or outside?)
-
-
-
-
+    # TODO
+    pass
 
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
@@ -170,8 +143,16 @@ def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
 
     Wrapper function
     """
-    # TODO
-    pass
+    path = get_best_path(digraph, start, end, [[start], 0, 0], max_dist_outdoors, None, [])
+    
+    best_path = path[0]
+    best_total_dist = path[1]
+    best_outdoor_dist = path[2]
+
+    if best_total_dist <= max_total_dist and best_outdoor_dist <= max_dist_outdoors:
+        return best_path
+    else: 
+        raise ValueError
 
 
 # ================================================================
