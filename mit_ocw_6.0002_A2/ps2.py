@@ -118,7 +118,7 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
         raise ValueError
     
     # DEBUG:
-    print(f'start = {start}, end = {end}, path = {path}, max_dist_outdoors = {max_dist_outdoors}, best_dist = {best_dist}, best_path = {best_path}')
+    # print(f'start = {start}, end = {end}, path = {path}, max_dist_outdoors = {max_dist_outdoors}, best_dist = {best_dist}, best_path = {best_path}')
 
     if path[0] != []:
         prevEdge = g.get_edge(path[0][-1], start)
@@ -128,15 +128,15 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
     else: 
         path[0] = [start]
     # DEBUG:
-    print(f'current path = {path}')
+    # print(f'current path = {path}')
     
     if path[2] > max_dist_outdoors:
         # DEBUG
-        print("Exceeding max_dist_outdoors already!")
+        # print("Exceeding max_dist_outdoors already!")
         return [None, float('inf')]
     if start == end:
         # DEBUG: 
-        print(f'find a path! path = {path[0:2]}')
+        # print(f'find a path! path = {path[0:2]}')
         return path[0: 2]
 
     startn = g.get_node(start)
@@ -144,13 +144,12 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
     for edge in g.get_edges_for_node(startn):
         childn = edge.get_destination()
         child = childn.get_name()
-        # DEBUG: try
         while path[0][-1] != start:
             path[0].pop()
         if child not in path[0]:
             if best_path == None or path[1] < best_dist:
                 newPath = get_best_path(g, child, end, path.copy(), max_dist_outdoors, best_dist, best_path)
-                if newPath[0] != None:
+                if newPath[0] != None and newPath[1] < best_dist:
                     best_path = newPath[0].copy()
                     best_dist = newPath[1]
     return [best_path, best_dist]
