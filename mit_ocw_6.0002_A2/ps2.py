@@ -114,11 +114,12 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
     startn = Node(start)
     endn = Node(end)
 
-    # DEBUG:
-    print(f'previous path = {path}')
-
     if not (g.has_node(startn) and g.has_node(endn)):
         raise ValueError
+    
+    # DEBUG:
+    print(f'start = {start}, end = {end}, path = {path}, max_dist_outdoors = {max_dist_outdoors}, best_dist = {best_dist}, best_path = {best_path}')
+
     if path[0] != []:
         prevEdge = g.get_edge(path[0][-1], start)
         path[1] += prevEdge.get_total_distance()
@@ -126,25 +127,33 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
         path[0] += [start]
     else: 
         path[0] = [start]
-
     # DEBUG:
     print(f'current path = {path}')
     
     if path[2] > max_dist_outdoors:
-        return [[], 0, -1]
+        # DEBUG
+        print("Exceeding max_dist_outdoors already!")
+        return [None, float('inf')]
     if start == end:
-        return path
+        # DEBUG: 
+        print(f'find a path! path = {path[0:2]}')
+        return path[0: 2]
+
     startn = g.get_node(start)
+
     for edge in g.get_edges_for_node(startn):
         childn = edge.get_destination()
         child = childn.get_name()
+        # DEBUG: try
+        while path[0][-1] != start:
+            path[0].pop()
         if child not in path[0]:
             if best_path == None or path[1] < best_dist:
-                newPath = get_best_path(g, child, end, path, max_dist_outdoors, best_dist, best_path)
-                if newPath[0] != []:
-                    best_path = newPath[0]
+                newPath = get_best_path(g, child, end, path.copy(), max_dist_outdoors, best_dist, best_path)
+                if newPath[0] != None:
+                    best_path = newPath[0].copy()
                     best_dist = newPath[1]
-    return [best_path, best_dist, -1]
+    return [best_path, best_dist]
 
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
