@@ -1,3 +1,11 @@
+"""
+test file:
+call by reference vs call by name
+list operations: on site vs creat new
+rebound: =
+variable scope
+"""
+
 # # test 1
 
 # mylist = [1,0,0]
