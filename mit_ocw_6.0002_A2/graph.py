@@ -83,6 +83,23 @@ class Digraph(object):
         edge_strs = sorted(edge_strs)  # sort alphabetically
         return '\n'.join(edge_strs)  # concat edge_strs with "\n"s between them
 
+    # additional function
+    def get_node(self, nodeName):
+        for node in self.edges:
+            if node.get_name() == nodeName:
+                return node
+        raise ValueError
+    
+    # additional function
+    def get_edge(self, srcName, destName):
+        # assume src and dest valid
+        srcn = self.get_node(srcName)
+        destn = self.get_node(destName)
+        for edge in self.edges[srcn]:
+            if edge.get_destination() == destn:
+                return edge
+        raise ValueError
+
     def get_edges_for_node(self, node):
         return self.edges[node]
 

@@ -101,6 +101,4 @@ if __name__=="__main__":
     print(g.has_node(na2))
     print([node.get_destination().get_name() for node in g.get_edges_for_node(na)])
     print([node.get_destination().get_name() for node in g.get_edges_for_node(na2)])
-
-
     # unittest.main()

@@ -109,8 +109,42 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
 
     Recursive helper function
     """
-    # TODO
-    pass
+    # TODO refactor the return format
+    g = digraph
+    startn = Node(start)
+    endn = Node(end)
+
+    # DEBUG:
+    print(f'previous path = {path}')
+
+    if not (g.has_node(startn) and g.has_node(endn)):
+        raise ValueError
+    if path[0] != []:
+        prevEdge = g.get_edge(path[0][-1], start)
+        path[1] += prevEdge.get_total_distance()
+        path[2] += prevEdge.get_outdoor_distance()
+        path[0] += [start]
+    else: 
+        path[0] = [start]
+
+    # DEBUG:
+    print(f'current path = {path}')
+    
+    if path[2] > max_dist_outdoors:
+        return [[], 0, -1]
+    if start == end:
+        return path
+    startn = g.get_node(start)
+    for edge in g.get_edges_for_node(startn):
+        childn = edge.get_destination()
+        child = childn.get_name()
+        if child not in path[0]:
+            if best_path == None or path[1] < best_dist:
+                newPath = get_best_path(g, child, end, path, max_dist_outdoors, best_dist, best_path)
+                if newPath[0] != []:
+                    best_path = newPath[0]
+                    best_dist = newPath[1]
+    return [best_path, best_dist, -1]
 
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
@@ -143,17 +177,12 @@ def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
 
     Wrapper function
     """
-    path = get_best_path(digraph, start, end, [[start], 0, 0], max_dist_outdoors, None, [])
-    
-    best_path = path[0]
-    best_total_dist = path[1]
-    best_outdoor_dist = path[2]
-
-    if best_total_dist <= max_total_dist and best_outdoor_dist <= max_dist_outdoors:
-        return best_path
-    else: 
-        raise ValueError
-
+    if start == end:
+        return [start]
+    path = get_best_path(digraph, start, end, [[], 0, 0], max_dist_outdoors, float('inf'), None)
+    if path[1] <= max_total_dist:
+        return path[0]
+    raise ValueError
 
 # ================================================================
 # Begin tests -- you do not need to modify anything below this line
