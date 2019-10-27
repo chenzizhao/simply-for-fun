@@ -14,9 +14,9 @@ def binarySearch(l:list, target:int, low=0, high=None):
 
 mysortedlist=[1,2,3,4,5,6,7,8,9]
 target=11
-print(f'Binary search w/ recursion: the index of {target} in {mysortedlist} is {binarySearch(mysortedlist, target)}')
+print(f'Binary search w/ recursion: the index of {target} in {mysortedlist} is {binarySearch(mysortedlist, target)} O(logn)')
 
-# similar to the above function, but uses while loop instead of recursion calls
+# similar to the previous function, but uses while loop instead of recursion calls
 def binarySearch2(l: list, target:int):
     low, high = 0, len(l)-1
     while low<=high:
@@ -30,4 +30,4 @@ def binarySearch2(l: list, target:int):
     return -1
 mysortedlist=[1,2,3,4,5,6,7,8,9]
 target=9
-print(f'Binary search w/o recursion: the index of {target} in {mysortedlist} is {binarySearch2(mysortedlist, target)}')
+print(f'Binary search w/o recursion: the index of {target} in {mysortedlist} is {binarySearch2(mysortedlist, target)} O(logn)')
