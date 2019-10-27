@@ -6,10 +6,13 @@ class Node(object):
         self.right=right
 # assuming no replicates in the tree 
 class BSTree(object):
+    
     def __init__(self):
         self.root=None
+    
     def isEmpty(self):
         return self.root==None
+    
     def printTree(self): # in order traverse, recursion
         def printNode(root):
             if root==None:
@@ -19,6 +22,7 @@ class BSTree(object):
             printNode(root.right)
             return
         printNode(self.root)
+    
     def insert(self, val):
         if self.isEmpty():
             self.root=Node(val)
@@ -26,7 +30,7 @@ class BSTree(object):
         current=self.root
         while current!=None:
             if current.val==val:
-                return False # replicates error
+                return None # replicates error
             elif current.val>val:
                 prev=current
                 current=current.left
@@ -35,14 +39,22 @@ class BSTree(object):
                 current=current.right
         if prev.val>val:
             prev.left=Node(val)
-            return True
+            return prev.left
         else:
             prev.right=Node(val)
-            return True
-    def search(self, val):
-        raise NotImplementedError
+            return prev.right
+    
+    def search(self, target): # recursive search
+        def searchNode(root):
+            if root==None: return None
+            if root.val==target: return root
+            if root.val>target: return searchNode(root.left)
+            else: return searchNode(root.right)
+        return searchNode(self.root)
+    
     def delete(self, val):
         raise NotImplementedError
+    
     def destroyTree(self):
         raise NotImplementedError
 
@@ -52,3 +64,9 @@ for i in myList:
     print(f'Was {i} inserted? {myTree.insert(i)}')
 print("In order traverse the tree ...")
 myTree.printTree()
+
+print("Search existing number ...")
+print(myTree.search(4))
+
+print("Search non-existing number ...")
+print(myTree.search(10))
