@@ -1,7 +1,7 @@
 myList = [1,4,2,8,5,7,10]
 
 # non in place quick sort 1
-def quicksort1(l: list):
+def quicksort1(l):
     if len(l)<2:
         return l
     pivot = l[0]
@@ -9,7 +9,7 @@ def quicksort1(l: list):
     right = list(filter(lambda x: x>pivot, l[1:]))
     return quicksort1(left) + [pivot] + quicksort1(right)
 
-print(f'Quicksort1: {quicksort1(myList)}')
+print(f"Quicksort1: {quicksort1(myList)}")
 
 # non in place quick sort 2
 def quicksort2(l:list):
@@ -84,12 +84,33 @@ def merge(l:list, left:int, middle:int, right:int):
     return
 myList = [1,4,2,8,5,7,10]
 mergesort(myList)
-print(f'Mergesort: in place {myList}')
+print(f'Mergesort recursive: in place {myList}')
+
+# mergesort iterative 
+def merge_iterative(lst:list):
+    if len(lst)<=1: return lst
+    stack=[(0, len(lst)-1, (len(lst)-1)//2)]
+    end=len(lst)-1
+    start=0
+    while stack!=[]:
+        while end>start:
+            middle=(start+end)//2
+            stack.append((middle+1, end, middle))
+            stack.append((start, middle, middle))
+            end=middle
+		# leaves while-loop when end==start==middle
+        merge(lst, start, end, middle)
+        start, end, middle=stack.pop()
+
+    merge(lst, 0, len(lst)-1, (len(lst)-1)//2)
+    return
+
+myList = [1,4,2,8,5,7,10]
+merge_iterative(myList)
+print(f'Mergesort iterative: in place {myList}')
+
 
 # insertion sort
-# 1,4,2,8,5,7
-#   i
-#   j
 def insertionsort(l:list):
     if len(l)<2:
         return
@@ -101,12 +122,25 @@ def insertionsort(l:list):
             # l[j+1] is empty right now
             if l[j]>select:
                 l[j], l[j+1] = l[j+1], l[j]
-            else:
-                l[j+1]=select
-                break
+            # else:
+            #     l[j+1]=select
+            #     break
             j-=1
         i+=1
     return
 myList = [1,4,2,8,5,7,10]
 insertionsort(myList)
 print(f'Insertionsort: in place {myList}')
+
+# heap sort
+from heapq import heappush, heappop
+def heapsort(lst):
+    heap=[]
+    for i in range(len(lst)):
+        heappush(heap, lst[i])
+    for i in range(len(lst)):
+        lst[i] = heappop(heap)
+    return
+myList = [1,4,2,8,5,7,10]
+heapsort(myList)
+print(f'Heapsort: in place {myList}')

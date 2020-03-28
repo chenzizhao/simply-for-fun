@@ -6,7 +6,6 @@ class Node(object):
         self.right=right
 # assuming no replicates in the tree 
 class BSTree(object):
-    
     def __init__(self):
         self.root=None
     
@@ -52,16 +51,26 @@ class BSTree(object):
             else: return searchNode(root.right)
         return searchNode(self.root)
     
-    def delete(self, val):
-        raise NotImplementedError
+    def delete(self, target): # iterative search
+        if self.root==None: return False #Failed deletion
+        current=self.root
+        if current.val==target:
+            self.root=None
+            del current
+            return True
+        while current!=None:
+            
     
     def destroyTree(self):
         raise NotImplementedError
 
+# Testing
 myList=[3,1,4,1,5,9,2,6,5,5]
+print("Initializing the tree ...")
 myTree=BSTree()
 for i in myList:
     print(f'Was {i} inserted? {myTree.insert(i)}')
+
 print("In order traverse the tree ...")
 myTree.printTree()
 
@@ -70,3 +79,4 @@ print(myTree.search(4))
 
 print("Search non-existing number ...")
 print(myTree.search(10))
+
