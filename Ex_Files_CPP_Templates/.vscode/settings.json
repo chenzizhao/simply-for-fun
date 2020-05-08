@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "maxof",
+        "sclass",
+        "weinman"
+    ],
+    "files.associations": {
+        "ostream": "cpp",
+        "vector": "cpp",
+        "locale": "cpp"
+    }
+}
