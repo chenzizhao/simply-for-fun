@@ -11,6 +11,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
+    "eslint": "^7.0.0",
     "express": "^4.17.1"
   }
 }
