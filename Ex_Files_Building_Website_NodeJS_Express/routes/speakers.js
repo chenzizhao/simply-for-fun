@@ -8,7 +8,7 @@ module.exports = () => {
     return response.send('Speakers list');
   });
   router.get('/:shortname', (request, response) => {
-    return response.send(`Detailed page of ${request.params.shortname}`));
+    return response.send(`Detailed page of ${request.params.shortname}`);
   });
   return router;
 };
