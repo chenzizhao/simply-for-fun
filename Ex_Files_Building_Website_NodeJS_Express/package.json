@@ -9,7 +9,10 @@
   "keywords": [],
   "author": "Daniel Khan",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "beautify": "0.0.8",
+    "eslint": "^7.0.0"
+  },
   "dependencies": {
     "express": "^4.17.1"
   }
