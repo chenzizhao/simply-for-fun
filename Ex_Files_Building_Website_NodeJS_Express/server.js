@@ -16,7 +16,7 @@ const port = 3000;
 
 app.set('trust proxy', 1);
 
-// Use cookie session
+// Use cookie session to persist data from request to request
 app.use(
   cookieSession({
     name: 'session',
