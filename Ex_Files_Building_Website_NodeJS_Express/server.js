@@ -14,7 +14,6 @@ app.set('views', path.join(__dirname, './views'));
 
 // Global middleware (used for every function call)
 app.use(express.static(path.join(__dirname, './static')));
-
 app.use('/', routes());
 
 app.listen(port, () => {
