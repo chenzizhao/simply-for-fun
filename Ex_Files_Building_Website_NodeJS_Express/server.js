@@ -11,10 +11,10 @@ const port = 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
 
-// Middle ware
+// Global middleware (used for every function call)
 app.use(express.static(path.join(__dirname, './static')));
 
-// Get route, send html files
+// Routing middleware
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, './static/index.html'));
   response.render('pages/index', { pageTitle: 'Welcome' });
