@@ -2,13 +2,18 @@ const express = require('express');
 // This is a routing module
 const router = express.Router();
 
-module.exports = () => {
+module.exports = (params) => {
   // Routing middleware (actual)
-  router.get('/', (request, response) => {
-    return response.send('Speakers list');
+  const { speakerService } = params;
+
+  router.get('/', async (request, response) => {
+    const speakers = await speakerService.getList();
+    return response.json(speakers);
   });
+
   router.get('/:shortname', (request, response) => {
     return response.send(`Detailed page of ${request.params.shortname}`);
   });
+
   return router;
 };
