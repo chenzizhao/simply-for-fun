@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const routes = require('./routes');
 
 const app = express();
 
@@ -14,15 +15,7 @@ app.set('views', path.join(__dirname, './views'));
 // Global middleware (used for every function call)
 app.use(express.static(path.join(__dirname, './static')));
 
-// Routing middleware
-app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname, './static/index.html'));
-  response.render('pages/index', { pageTitle: 'Welcome' });
-});
-
-app.get('/speakers', (request, response) => {
-  response.sendFile(path.join(__dirname, './static/speakers.html'));
-});
+app.use('/', routes());
 
 app.listen(port, () => {
   console.log(`Express server listening on port ${port}`);
