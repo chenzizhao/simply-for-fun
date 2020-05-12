@@ -6,12 +6,12 @@ const router = express.Router();
 const speakersRoute = require('./speakers');
 const feedbackRoute = require('./feedback');
 
-module.exports = () => {
+module.exports = (params) => {
   // Routing middleware (actual)
   router.get('/', (request, response) => {
     response.render('pages/index', { pageTitle: 'Welcome' });
   });
-  router.use('/speakers', speakersRoute());
-  router.use('/feedback', feedbackRoute());
+  router.use('/speakers', speakersRoute(params.speakerService));
+  router.use('/feedback', feedbackRoute(params.feedbackService));
   return router;
 };
