@@ -1,38 +1,26 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
 
-experiences = [
+posts = [
     {
-        'company':'SOCAAR, University of Toronto',
-        'role':'Research Assistant',
-        'time':'March 2019 - August 2019',
-    },
-
-    {
-        'company':'Faculty of Law, University of Toronto',
-        'role':'IT Help Desk Analyst',
-        'time':'October 2019 - April 2020',
-    },
-
-    {
-        'company':'Google',
-        'role':'STEP Intern',
-        'time':'May 2020 - August 2020',
+        'author':'Zoe Chen',
+        'title':'first post',
+        'content':'Today I learned Flask',
+        'date_posted':'May 24, 2020',
     }
 ]
-
 
 
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    return render_template("home.html", title="Home Page")
 
 @app.route("/about")
 def about():
-    return render_template("about.html", experiences=experiences)
+    return render_template("about.html", posts=posts)
 
 if __name__ == "__main__":
     app.run(debug=True)
