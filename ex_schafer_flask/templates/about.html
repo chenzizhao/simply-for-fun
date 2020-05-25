@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>About Me</title>
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>About</title>
+    {% endif %}
   </head>
   <body>
     <h1>About Me</h1>
+    {% for experience in experiences %}
+    <p>
+      I was a {{ experience.role }} at {{ experience.company }} between {{
+      experience.time }}.
+    </p>
+    {% endfor %}
   </body>
 </html>
